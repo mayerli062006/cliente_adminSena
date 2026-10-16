@@ -7,68 +7,70 @@ use Illuminate\Http\Request;
 
 class TrainingCenterController extends Controller
 {
-
-    // Método privado para manejar llamadas HTTP repetitivas
+    // Método privado para manejar llamadas HTTP repetitivas (patrón del instructor)
     private function fetchDataFromApi($url)
     {
         $response = Http::get($url);
         return $response->json();
     }
 
-    public function index()   //http://api.codersfree.test/v1/categories?included=posts
+    public function index()
     {
-
         $url = env('URL_SERVER_API');
 
-        $trainingCenters = $this->fetchDataFromApi($url . '/trainingCenters');
-        // return $categories;
-        return view('training_centers.index', compact('trainingCenters'));
-    }
+        // Se eliminó '/index' para que apunte correctamente a la ruta base de la API
+        $training_centers = $this->fetchDataFromApi($url . '/training_center');
 
-    public function show($id)
-    {
-
-        $url = env('URL_SERVER_API');
-
-        $trainingCenter = $this->fetchDataFromApi($url . '/trainingCenters/' . $id);
-
-        return view('training_centers.show', compact('trainingCenter'));
+        return view('training_center.index', compact('training_centers'));
     }
 
     public function create()
     {
-        return view('training_centers.create');
+        return view('training_center.create');
     }
 
     public function store(Request $request)
     {
         $url = env('URL_SERVER_API');
 
-        Http::post($url . '/trainingCenters', $request->all());
+        Http::post($url . '/training_center', $request->all());
 
-        return redirect()->route('training_centers.index');
+        return redirect()->route('training_center.index');
+    }
+
+    public function show($id)
+    {
+        $url = env('URL_SERVER_API');
+
+        $training_center = $this->fetchDataFromApi($url . '/training_center/' . $id);
+
+        return view('training_center.show', compact('training_center'));
     }
 
     public function edit($id)
     {
         $url = env('URL_SERVER_API');
-        $trainingCenter = $this->fetchDataFromApi($url . '/trainingCenters/' . $id);
-        return view('training_centers.edit', compact('trainingCenter'));
+
+        $training_center = $this->fetchDataFromApi($url . '/training_center/' . $id);
+
+        return view('training_center.edit', compact('training_center'));
     }
 
     public function update(Request $request, $id)
     {
         $url = env('URL_SERVER_API');
 
-        Http::put($url . '/trainingCenters/' . $id, $request->all());
+        Http::put($url . '/training_center/' . $id, $request->all());
 
-        return redirect()->route('training_centers.index');
+        return redirect()->route('training_center.index');
     }
 
     public function destroy($id)
     {
         $url = env('URL_SERVER_API');
-        Http::delete($url . '/trainingCenters/' . $id);
-        return redirect()->route('training_centers.index');
+
+        Http::delete($url . '/training_center/' . $id);
+
+        return redirect()->route('training_center.index');
     }
 }

@@ -1,13 +1,23 @@
 @extends('layouts.app')
 
 @section('content')
+
+@php
+    // Extraemos los datos de forma segura, soportando tanto arreglos como objetos
+    $id = is_array($computer) ? ($computer['id'] ?? '') : ($computer->id ?? '');
+    $numero = is_array($computer) ? ($computer['number'] ?? $computer['numero'] ?? 'Sin número') : ($computer->number ?? $computer->numero ?? 'Sin número');
+    $marca = is_array($computer) ? ($computer['brand'] ?? $computer['marca'] ?? 'Sin marca') : ($computer->brand ?? $computer->marca ?? 'Sin marca');
+    $createdAt = is_array($computer) ? ($computer['created_at'] ?? null) : ($computer->created_at ?? null);
+    $updatedAt = is_array($computer) ? ($computer['updated_at'] ?? null) : ($computer->updated_at ?? null);
+@endphp
+
 <div class="container mt-5">
 
     <div class="card shadow-lg border-0">
 
-        <div class="card-header bg-primary text-white">
+        <div class="card-header text-white" style="background-color: #25c72f;">
             <h3 class="mb-0">
-                {{ $computer->numero }}
+                {{ $numero }}
             </h3>
         </div>
 
@@ -18,21 +28,21 @@
                 <div class="col-md-6 mb-3">
                     <label class="fw-bold">ID</label>
                     <div class="form-control">
-                        {{ $computer->id }}
+                        {{ $id }}
                     </div>
                 </div>
 
                 <div class="col-md-6 mb-3">
                     <label class="fw-bold">Número</label>
                     <div class="form-control">
-                        {{ $computer->numero }}
+                        {{ $numero }}
                     </div>
                 </div>
 
                 <div class="col-md-6 mb-3">
                     <label class="fw-bold">Marca</label>
                     <div class="form-control">
-                        {{ $computer->marca }}
+                        {{ $marca }}
                     </div>
                 </div>
 
@@ -45,14 +55,14 @@
                 <div class="col-md-6">
                     <label class="fw-bold">Fecha de creación</label>
                     <div class="form-control">
-                        {{ \Carbon\Carbon::parse($computer->created_at)->format('d/m/Y H:i') }}
+                        {{ $createdAt ? \Carbon\Carbon::parse($createdAt)->format('d/m/Y H:i') : 'N/A' }}
                     </div>
                 </div>
 
                 <div class="col-md-6">
                     <label class="fw-bold">Última actualización</label>
                     <div class="form-control">
-                        {{ \Carbon\Carbon::parse($computer->updated_at)->format('d/m/Y H:i') }}
+                        {{ $updatedAt ? \Carbon\Carbon::parse($updatedAt)->format('d/m/Y H:i') : 'N/A' }}
                     </div>
                 </div>
 

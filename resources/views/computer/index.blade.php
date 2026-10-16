@@ -147,7 +147,7 @@
                           color: white;
                       ">
 
-                    {{ $computers->count() }} registros
+                    {{ count($computers ?? []) }}
 
                 </span>
 
@@ -202,7 +202,14 @@
 
                 <tbody>
 
-                    @forelse($computers as $computer)
+                    @forelse(($computers ?? []) as $computer)
+
+                    @php
+                        // Obtenemos de forma segura el ID, número y marca sin importar si es array u objeto
+                        $id = is_array($computer) ? ($computer['id'] ?? '') : ($computer->id ?? '');
+                        $numero = is_array($computer) ? ($computer['number'] ?? $computer['numero'] ?? '') : ($computer->number ?? $computer->numero ?? '');
+                        $marca = is_array($computer) ? ($computer['brand'] ?? $computer['marca'] ?? '') : ($computer->brand ?? $computer->marca ?? '');
+                    @endphp
 
                     <tr>
 
@@ -212,7 +219,7 @@
 
                         <td class="px-3 fw-semibold">
 
-                            {{ $computer->id }}
+                            {{ $id }}
 
                         </td>
 
@@ -252,7 +259,7 @@
 
                                 <span class="fw-semibold">
 
-                                    {{ $computer->numero }}
+                                    {{ $numero }}
 
                                 </span>
 
@@ -274,7 +281,7 @@
                                    style="color: #25c72f;">
                                 </i>
 
-                                {{ $computer->marca }}
+                                {{ $marca }}
 
                             </span>
 
@@ -293,7 +300,7 @@
 
                                 <!-- MOSTRAR -->
 
-                                <a href="{{ route('computer.show', $computer->id) }}"
+                                <a href="{{ route('computer.show', $id) }}"
                                    class="btn btn-success btn-sm"
                                    title="Mostrar">
 
@@ -311,7 +318,7 @@
 
                                 <!-- EDITAR -->
 
-                                <a href="{{ route('computer.edit', $computer->id) }}"
+                                <a href="{{ route('computer.edit', $id) }}"
                                    class="btn btn-success btn-sm"
                                    title="Editar">
 
@@ -329,7 +336,7 @@
 
                                 <!-- ELIMINAR -->
 
-                                <form action="{{ route('computer.destroy', $computer->id) }}"
+                                <form action="{{ route('computer.destroy', $id) }}"
                                       method="POST"
                                       class="d-inline">
 

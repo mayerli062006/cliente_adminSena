@@ -26,7 +26,6 @@ Route::get('computer/{id}', [ComputerController::class, 'show'])->name('computer
 Route::put('computer/{id}', [ComputerController::class, 'update'])->name('computer.update');
 Route::delete('computer/{id}', [ComputerController::class, 'destroy'])->name('computer.destroy');
 
-
 // RUTAS PARA AREA
 Route::get('areas/list', [AreaController::class, 'index'])->name('areas.index');
 Route::get('areas/create', [AreaController::class, 'create'])->name('areas.create');
