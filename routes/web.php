@@ -55,7 +55,6 @@ Route::get('course/{id}', [CourseController::class, 'show'])->name('course.show'
 Route::put('course/{id}', [CourseController::class, 'update'])->name('course.update');
 Route::delete('course/{id}', [CourseController::class, 'destroy'])->name('course.destroy');
 
-
 // RUTAS PARA APPRENTICE
 Route::get('apprentice/list', [ApprenticeController::class, 'index'])->name('apprentice.index');
 Route::get('apprentice/create', [ApprenticeController::class, 'create'])->name('apprentice.create');

@@ -3,12 +3,12 @@
 @section('content')
 
 @php
-    // Extraemos los datos de forma segura, soportando tanto arreglos como objetos
-    $id = is_array($computer) ? ($computer['id'] ?? '') : ($computer->id ?? '');
-    $numero = is_array($computer) ? ($computer['number'] ?? $computer['numero'] ?? 'Sin número') : ($computer->number ?? $computer->numero ?? 'Sin número');
-    $marca = is_array($computer) ? ($computer['brand'] ?? $computer['marca'] ?? 'Sin marca') : ($computer->brand ?? $computer->marca ?? 'Sin marca');
-    $createdAt = is_array($computer) ? ($computer['created_at'] ?? null) : ($computer->created_at ?? null);
-    $updatedAt = is_array($computer) ? ($computer['updated_at'] ?? null) : ($computer->updated_at ?? null);
+// Extraemos los datos de forma segura, soportando tanto arreglos como objetos
+$id = is_array($computer) ? ($computer['id'] ?? '') : ($computer->id ?? '');
+$numero = is_array($computer) ? ($computer['number'] ?? $computer['numero'] ?? 'Sin número') : ($computer->number ?? $computer->numero ?? 'Sin número');
+$marca = is_array($computer) ? ($computer['brand'] ?? $computer['marca'] ?? 'Sin marca') : ($computer->brand ?? $computer->marca ?? 'Sin marca');
+$createdAt = is_array($computer) ? ($computer['created_at'] ?? null) : ($computer->created_at ?? null);
+$updatedAt = is_array($computer) ? ($computer['updated_at'] ?? null) : ($computer->updated_at ?? null);
 @endphp
 
 <div class="container mt-5">

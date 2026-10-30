@@ -22,42 +22,28 @@ class HomeController extends Controller
     {
         $url = env('URL_SERVER_API');
 
-        // 1. Obtener listados generales (tomando los últimos 3 de cada recurso)
-        // Ajusta las rutas del endpoint ('/courses', '/computers', etc.) 
-        $courses    = collect($this->fetchDataFromApi($url . '/courses'))->take(3);
-        $computers  = collect($this->fetchDataFromApi($url . '/computers'))->take(3);
-        $apprentices= collect($this->fetchDataFromApi($url . '/apprentices'))->take(3);
-        $teachers   = collect($this->fetchDataFromApi($url . '/teachers'))->take(3);
-        $centers    = collect($this->fetchDataFromApi($url . '/training_centers'))->take(3);
-        $areas      = collect($this->fetchDataFromApi($url . '/area'))->take(3); 
+        $coursesData     = $this->fetchDataFromApi($url . '/courses');
+        $computersData   = $this->fetchDataFromApi($url . '/computers');
+        $apprenticesData = $this->fetchDataFromApi($url . '/apprentice');
+        $teachersData    = $this->fetchDataFromApi($url . '/teacher');
+        $centersData     = $this->fetchDataFromApi($url . '/training_centers');
+        $areasData       = $this->fetchDataFromApi($url . '/area');
 
-        //  Calcular los totales contando los elementos del array de la API
-        $totalCourses    = count($this->fetchDataFromApi($url . '/courses'));
-        $totalComputers  = count($this->fetchDataFromApi($url . '/computers'));
-        $totalApprentices= count($this->fetchDataFromApi($url . '/apprentices'));
-        $totalTeachers   = count($this->fetchDataFromApi($url . '/teachers'));
-        $totalCenters    = count($this->fetchDataFromApi($url . '/training_centers'));
-        $totalAreas      = count($this->fetchDataFromApi($url . '/area'));
+        // Totales seguros
+        $totalCourses     = is_array($coursesData) ? count($coursesData) : 0;
+        $totalComputers   = is_array($computersData) ? count($computersData) : 0;
+        $totalApprentices = is_array($apprenticesData) ? count($apprenticesData) : 0;
+        $totalTeachers    = is_array($teachersData) ? count($teachersData) : 0;
+        $totalCenters     = is_array($centersData) ? count($centersData) : 0;
+        $totalAreas       = is_array($areasData) ? count($areasData) : 0;
 
-        // Aprendices por curso (Dependiendo de si tu API tiene un endpoint específico o si lo calculas aquí)
-        // Si tu API provee una ruta como '/courses/with-apprentices-count', puedes consumirla directamente:
-        $apprenticesByCourse = $this->fetchDataFromApi($url . '/courses/with-apprentices-count');
-
-        // ENVIAR DATOS A LA VISTA
         return view('home.index', compact(
-            'courses',
-            'computers',
             'totalCourses',
             'totalComputers',
-            'apprentices',
             'totalApprentices',
-            'teachers',
             'totalTeachers',
-            'centers',
             'totalCenters',
-            'areas',
-            'totalAreas',
-            'apprenticesByCourse'
+            'totalAreas'
         ));
     }
-}
+} // <--- ¡Esta llave cierra la clase HomeController y soluciona el error!

@@ -14,29 +14,32 @@ class ComputerController extends Controller
         return $response->json();
     }
 
-  public function index()
-{
-    $url = env('URL_SERVER_API');
+    public function index()
+    {
+        $url = env('URL_SERVER_API');
 
-    // Quitamos '/index' para que apunte correctamente a http://adminsena.test/v1/computer
-    $computers = $this->fetchDataFromApi($url . '/computer');
+        // Quitamos '/index' para que apunte correctamente a http://adminsena.test/v1/computer
+        $computers = $this->fetchDataFromApi($url . '/computer');
 
-    return view('computer.index', compact('computers'));
-}
+        return view('computer.index', compact('computers'));
+    }
     public function create()
     {
         return view('computer.create');
     }
 
-    public function store(Request $request)
+public function store(Request $request)
     {
         $url = env('URL_SERVER_API');
 
-        Http::post($url . '/computer', $request->all());
+        // Enviamos explícitamente los campos con sus nombres correctos
+        Http::post($url . '/computer', [
+            'numero' => $request->numero,
+            'marca' => $request->marca,
+        ]);
 
         return redirect()->route('computer.index');
     }
-
     public function show($id)
     {
         $url = env('URL_SERVER_API');
@@ -55,11 +58,15 @@ class ComputerController extends Controller
         return view('computer.edit', compact('computer'));
     }
 
-    public function update(Request $request, $id)
+   public function update(Request $request, $id)
     {
         $url = env('URL_SERVER_API');
 
-        Http::put($url . '/computer/' . $id, $request->all());
+        // Enviamos explícitamente los campos para la actualización
+        Http::put($url . '/computer/' . $id, [
+            'numero' => $request->numero,
+            'marca' => $request->marca,
+        ]);
 
         return redirect()->route('computer.index');
     }

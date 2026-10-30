@@ -2,30 +2,30 @@
 
 @section('content')
 
-    <h1>Formulario Registrar Centro de Formación</h1>
+<h1>Formulario Registrar Centro de Formación</h1>
 
-    <form action="{{ route('training_center.store') }}" method="POST" enctype="multipart/form-data">
+<form action="{{ route('training_center.store') }}" method="POST">
 
-        @csrf
+    @csrf
 
-        <label>
-            Nombre:
-            <br>
-            <input type="text" name="name" value="{{ old('name') }}">
-        </label>
+    <label>
+        Nombre:
+        <br>
+        <input type="text" name="name">
+    </label>
 
-        <br><br>
+    <br><br>
 
-        <label>
-            Ubicación:
-            <br>
-            <input type="text" name="location" value="{{ old('location') }}">
-        </label>
+    <label>
+        Ubicación:
+        <br>
+        <input type="text" name="location">
+    </label>
 
-        <br><br>
+    <br><br>
 
-        <button type="submit" class="btn btn-success">Enviar Formulario</button>
+    <button type="submit">Enviar Formulario</button>
 
-    </form>
+</form>
 
 @endsection

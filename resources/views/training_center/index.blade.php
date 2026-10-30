@@ -23,38 +23,38 @@
 
             <tbody>
                 @php
-                    // Aseguramos de forma limpia que sea un arreglo antes de recorrerlo
-                    $centers = is_array($training_centers ?? null) ? $training_centers : [];
+                // Aseguramos de forma limpia que sea un arreglo antes de recorrerlo
+                $centers = is_array($training_centers ?? null) ? $training_centers : [];
                 @endphp
 
                 @forelse ($centers as $training_center)
-                    <tr>
-                        <td>{{ $training_center['id'] ?? '' }}</td>
-                        <td>{{ $training_center['name'] ?? '' }}</td>
-                        <td>{{ $training_center['location'] ?? '' }}</td>
+                <tr>
+                    <td>{{ $training_center['id'] ?? '' }}</td>
+                    <td>{{ $training_center['name'] ?? '' }}</td>
+                    <td>{{ $training_center['location'] ?? '' }}</td>
 
-                        <td class="text-center">
-                            <a href="{{ route('training_center.show', $training_center['id']) }}" class="btn btn-info btn-sm">Mostrar</a>
-                        </td>
-                        
-                        <td class="text-center">
-                            <a href="{{ route('training_center.edit', $training_center['id']) }}" class="btn btn-warning btn-sm">Editar</a>
-                        </td>
+                    <td class="text-center">
+                        <a href="{{ route('training_center.show', $training_center['id']) }}" class="btn btn-info btn-sm">Mostrar</a>
+                    </td>
 
-                        <td class="text-center">
-                            <form action="{{ route('training_center.destroy', $training_center['id']) }}" method="POST" class="d-inline">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('¿Está seguro de eliminar este centro?')">Eliminar</button>
-                            </form>
-                        </td>
-                    </tr>
+                    <td class="text-center">
+                        <a href="{{ route('training_center.edit', $training_center['id']) }}" class="btn btn-warning btn-sm">Editar</a>
+                    </td>
+
+                    <td class="text-center">
+                        <form action="{{ route('training_center.destroy', $training_center['id']) }}" method="POST" class="d-inline">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('¿Está seguro de eliminar este centro?')">Eliminar</button>
+                        </form>
+                    </td>
+                </tr>
                 @empty
-                    <tr>
-                        <td colspan="6" class="text-center py-4 text-muted">
-                            No hay centros de formación registrados.
-                        </td>
-                    </tr>
+                <tr>
+                    <td colspan="6" class="text-center py-4 text-muted">
+                        No hay centros de formación registrados.
+                    </td>
+                </tr>
                 @endforelse
             </tbody>
         </table>

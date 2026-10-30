@@ -20,7 +20,7 @@
 
                 
                     
-                    @foreach ($areas as $area)
+                   @foreach ($areas ?? [] as $area)
                     <tr>
                         <td>{{ $area['id'] }}</td>
                         <td>{{ $area['name']}}</td>

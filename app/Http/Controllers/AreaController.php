@@ -14,30 +14,35 @@ class AreaController extends Controller
         return $response->json();
     }
 
-    public function index()
-    {
-        $url = env('URL_SERVER_API');
+  public function index()
+{
+    $url = env('URL_SERVER_API');
 
-        // AQUÍ ESTABA EL ERROR: Cambia '/area/index' por únicamente '/area'
-        $areas = $this->fetchDataFromApi($url . '/area');
+    $response = Http::get($url . '/area');
 
-        return view('area.index', compact('areas'));
-    }
+    // Convertimos la respuesta de la API a un arreglo
+    $areas = $response->json();
+
+    // AQUÍ DEBE IR LA VISTA (Asegúrate de quitar el dd($areas))
+    return view('area.index', compact('areas'));
+}
 
     public function create()
     {
         return view('area.create');
     }
 
-    public function store(Request $request)
-    {
-        $url = env('URL_SERVER_API');
+   public function store(Request $request)
+{
+    $url = env('URL_SERVER_API');
 
-        Http::post($url . '/area', $request->all());
+    // Debe apuntar correctamente a '/area' o '/areas' según tu ruta de la API
+    Http::post($url . '/area', [
+        'name' => $request->name,
+    ]);
 
-        return redirect()->route('areas.index');
-    }
-
+    return redirect()->route('areas.index');
+}
     public function show($id)
     {
         $url = env('URL_SERVER_API');

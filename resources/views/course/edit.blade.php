@@ -1,130 +1,50 @@
 @extends('layouts.app')
 
 @section('content')
+<h1>Actualizar Curso</h1>
+<br>
 
-<h1>Editar Curso</h1>
-
-
-<form action="{{ route('course.update', $course->id) }}" method="POST">
+<form action="{{ route('course.update', $course) }}" method="POST">
 
     @csrf
-    @method('PUT')
+    @method('put')
 
 
     <label>
-        Número de curso:
+        Numero de Curso:
+        <br>
+        <input type="number" name="course_number" value="{{ old('course_number', $course['course_number']) }}">
     </label>
-
     <br>
-
-    <input 
-        type="number" 
-        name="course_number"
-        value="{{ $course->name_curso }}"
-        required
-    >
-
-
-    <br><br>
-
 
     <label>
-        Fecha:
+        Día:
+        <br>
+        <input type="date" name="day" value="{{ old('day', $course['day']) }}">
     </label>
-
     <br>
-
-    <input 
-        type="date" 
-        name="day"
-        value="{{ $course->day }}"
-        required
-    >
-
-
-    <br><br>
-
 
     <label>
         Área:
+        <br>
+        <input type="number" name="area_id" value="{{ old('area_id', $course['area_id']) }}">
     </label>
-
     <br>
-
-
-    <select name="area_id" class="form-control" required>
-
-
-        <option value="">
-            Seleccione un área
-        </option>
-
-
-        @foreach($areas as $area)
-
-            <option 
-                value="{{ $area->id }}"
-                {{ $course->area_id == $area->id ? 'selected' : '' }}
-            >
-
-                {{ $area->name }}
-
-            </option>
-
-
-        @endforeach
-
-
-    </select>
-
-
-    <br><br>
-
-
 
     <label>
-        Centro de formación:
+        Centro de Formación:
+        <br>
+        <input type="number" name="training_center_id" value="{{ old('training_center_id', $course['training_center_id']) }}">
     </label>
-
-    <br>
-
-
-    <select name="training_center_id" class="form-control" required>
-
-
-        <option value="">
-            Seleccione un centro
-        </option>
-
-
-        @foreach($training_centers as $training_center)
-
-            <option 
-                value="{{ $training_center->id }}"
-                {{ $course->training_centers_id == $training_center->id ? 'selected' : '' }}
-            >
-
-                {{ $training_center->name }}
-
-            </option>
-
-
-        @endforeach
-
-
-    </select>
-
 
     <br><br>
 
+    <button type="submit">Actualizar Curso</button>
+    <br><br>
 
-
-    <button type="submit" class="btn btn-success">
-        Actualizar Curso
-    </button>
-
+    <a href="{{ route('course.index') }}" class="btn btn-success mb-3">
+        <i class="bi bi-arrow-left"></i> Volver
+    </a>
 
 </form>
-
-
 @endsection

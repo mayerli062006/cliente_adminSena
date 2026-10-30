@@ -1,318 +1,55 @@
 @extends('layouts.app')
 
 @section('content')
-
-<div class="container py-5">
-
-    <div class="card border-0 shadow-sm mb-4 overflow-hidden">
-
-        <div class="row g-0 align-items-center">
-
-            <div class="col-md-8">
-
-                <div class="card-body p-4 p-md-5">
-
-                    <div class="d-flex align-items-center mb-3">
-
-                        <div class="bg-success bg-opacity-10 rounded-circle d-flex align-items-center justify-content-center me-3"
-                             style="width:55px;height:55px;">
-
-                            <i class="bi bi-book"
-                               style="font-size:28px;color:#25c72f;">
-                            </i>
-
-                        </div>
-
-                        <div>
-
-                            <h1 class="fw-bold mb-0">
-                                LISTA DE CURSOS
-                            </h1>
-
-                            <p class="text-muted mb-0">
-                                Administración y consulta de cursos
-                            </p>
-
-                        </div>
-
-                    </div>
-
-                    <p class="text-secondary mb-4">
-                        En esta sección puedes consultar los cursos
-                        registrados en el sistema.
-                    </p>
-
-                    <a href="{{ route('course.create') }}"
-                       class="btn btn-success btn-sm">
-
-                        <i class="bi bi-plus-circle me-1"></i>
-                        Nuevo Curso
-
-                    </a>
-
-                </div>
-
-            </div>
-
-            <div class="col-md-4">
-
-                <img src="{{ asset('img/cursos.jpg') }}"
-                     alt="Cursos SENA"
-                     class="img-fluid w-100"
-                     style="height:230px;object-fit:cover;">
-
-            </div>
-
-        </div>
-
-    </div>
-
-
-    <div class="card border-0 shadow-sm overflow-hidden">
-
-        <div class="card-header bg-white border-0 p-4">
-
-            <div class="d-flex justify-content-between align-items-center">
-
-                <div>
-
-                    <h4 class="fw-bold mb-1">
-
-                        <i class="bi bi-journal-bookmark-fill me-2"
-                           style="color:#25c72f;">
-                        </i>
-
-                        Cursos registrados
-
-                    </h4>
-
-                    <small class="text-muted">
-                        Información de los cursos del sistema
-                    </small>
-
-                </div>
-
-                <span class="badge rounded-pill px-3 py-2"
-                      style="background:#25c72f;color:white;">
-
-                    {{ $courses->count() }} registros
-
-                </span>
-
-            </div>
-
-        </div>
-
-
-        <div class="card-body p-0">
-
-            <div class="table-responsive">
-
-                <table class="table table-hover align-middle mb-0">
-
-                    <thead>
-
-                        <tr>
-
-                            <th class="py-3 px-4">
-                                ID
-                            </th>
-
-                            <th class="py-3">
-                                Número de Curso
-                            </th>
-
-                            <th class="py-3">
-                                Fecha
-                            </th>
-
-                            <th class="py-3">
-                                Área
-                            </th>
-
-                            <th class="py-3">
-                                Centro de Formación
-                            </th>
-
-                            <th class="py-3 text-center">
-                                Acción
-                            </th>
-
-                        </tr>
-
-                    </thead>
-
-
-                    <tbody>
-
-                    @forelse($courses as $item)
-
-                        <tr>
-
-                            <td class="fw-bold px-4">
-                                {{ $item->id }}
-                            </td>
-
-
-                            <td>
-
-                                <div class="d-flex align-items-center gap-2">
-
-                                    <div class="bg-light text-success rounded-circle d-flex align-items-center justify-content-center"
-                                         style="width:36px;height:36px;">
-
-                                        <i class="bi bi-book"></i>
-
-                                    </div>
-
-                                    <span class="fw-bold">
-                                        {{ $item->name_curso }}
-                                    </span>
-
-                                </div>
-
-                            </td>
-
-
-                            <td class="text-secondary">
-                                {{ $item->day }}
-                            </td>
-
-
-                            <td>
-
-                                @if($item->area)
-
-                                    <span class="badge bg-light text-dark border">
-
-                                        <i class="bi bi-diagram-3 text-success me-1"></i>
-
-                                        {{ $item->area->name }}
-
-                                    </span>
-
-                                @else
-
-                                    <span class="text-muted">
-                                        Sin área
-                                    </span>
-
-                                @endif
-
-                            </td>
-
-
-                            <td>
-
-                                @if($item->training_center)
-
-                                    <span class="badge bg-light text-dark border">
-
-                                        <i class="bi bi-building text-success me-1"></i>
-
-                                        {{ $item->training_center->name }}
-
-                                    </span>
-
-                                @else
-
-                                    <span class="text-muted">
-                                        Sin centro
-                                    </span>
-
-                                @endif
-
-                            </td>
-
-
-                            <td>
-
-                                <div class="d-flex justify-content-center gap-1">
-
-                                    <a href="{{ route('course.show', $item->id) }}"
-                                       class="btn btn-success btn-sm">
-
-                                        <i class="bi bi-eye-fill"></i>
-                                        Mostrar
-
-                                    </a>
-
-
-                                    <a href="{{ route('course.edit', $item->id) }}"
-                                       class="btn btn-success btn-sm">
-
-                                        <i class="bi bi-pencil-fill"></i>
-                                        Editar
-
-                                    </a>
-
-
-                                    <form action="{{ route('course.destroy', $item->id) }}"
-                                          method="POST"
-                                          class="d-inline">
-
-                                        @csrf
-                                        @method('DELETE')
-
-                                        <button type="submit"
-                                                class="btn btn-success btn-sm"
-                                                onclick="return confirm('¿Está seguro de eliminar este curso?')">
-
-                                            <i class="bi bi-trash-fill"></i>
-                                            Eliminar
-
-                                        </button>
-
-                                    </form>
-
-                                </div>
-
-                            </td>
-
-                        </tr>
-
-                    @empty
-
-                        <tr>
-
-                            <td colspan="6"
-                                class="text-center py-5 text-muted">
-
-                                No hay cursos registrados.
-
-                            </td>
-
-                        </tr>
-
-                    @endforelse
-
-                    </tbody>
-
-                </table>
-
-            </div>
-
-        </div>
-
-    </div>
+<h1>Lista de Aprendices</h1>
+<br>
+
+<div class="container">
+
+    <!-- El botón va fuera de la tabla, justo aquí -->
+    <a href="{{ route('apprentice.create') }}" class="btn btn-success mb-3">
+        <i class="bi bi-plus-circle"></i> Nuevo Aprendiz 
+    </a>
+
+    <table id="idApprentice" class="table table-striped table-bordered" style="width:100%">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Cell_number</th>
+                <th>Course_id</th>
+                <th>Computer_id</th>
+                <th colspan="3">Acción</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach ($apprentices ?? [] as $apprentice)
+            <tr>
+                <td>{{ $apprentice['id'] }}</td>
+                <td>{{ $apprentice['name'] }}</td>
+                <td>{{ $apprentice['email'] }}</td>
+                <td>{{ $apprentice['cell_number'] }}</td>
+                <td>{{ $apprentice['course']['course_number'] ?? $apprentice['course']['name_curso'] ?? '' }}</td>
+                <td>{{ $apprentice['computer']['number'] ?? $apprentice['computer']['numero'] ?? '' }}</td>
+
+                <td>
+                    <a href="{{ route('apprentice.show', $apprentice['id']) }}">Mostrar</a>
+                </td>
+                <td>
+                    <a href="{{ route('apprentice.edit', $apprentice['id']) }}">Editar</a>
+                </td>
+                <td>
+                    <form action="{{ route('apprentice.destroy', $apprentice['id']) }}" method="POST">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+                    </form>
+                </td>
+            </tr>
+            @endforeach
+        </tbody>
+    </table>
 
 </div>
-
-
-<style>
-
-.btn-success {
-    background-color:#25c72f;
-    border-color:#25c72f;
-    color:white;
-}
-
-.btn-success:hover {
-    background-color:#20b82b;
-    border-color:#20b82b;
-    color:white;
-}
-
-</style>
-
 @endsection

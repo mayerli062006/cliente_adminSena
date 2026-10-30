@@ -50,9 +50,13 @@
 
                 <option value="">Seleccione un curso</option>
 
-                @foreach($courses as $course)
-                    <option value="{{ $course->id }}">
-                        {{ $course->name_curso }}
+                @foreach($courses ?? [] as $course)
+                    @php
+                        $courseId = is_array($course) ? ($course['id'] ?? '') : ($course->id ?? '');
+                        $courseName = is_array($course) ? ($course['name_curso'] ?? $course['course_number'] ?? '') : ($course->name_curso ?? '');
+                    @endphp
+                    <option value="{{ $courseId }}">
+                        {{ $courseName }}
                     </option>
                 @endforeach
 
@@ -66,9 +70,13 @@
 
                 <option value="">Seleccione un equipo</option>
 
-                @foreach($computers as $computer)
-                    <option value="{{ $computer->id }}">
-                        {{ $computer->numero }}
+                @foreach($computers ?? [] as $computer)
+                    @php
+                        $computerId = is_array($computer) ? ($computer['id'] ?? '') : ($computer->id ?? '');
+                        $computerNum = is_array($computer) ? ($computer['number'] ?? $computer['numero'] ?? '') : ($computer->numero ?? '');
+                    @endphp
+                    <option value="{{ $computerId }}">
+                        {{ $computerNum }}
                     </option>
                 @endforeach
 
