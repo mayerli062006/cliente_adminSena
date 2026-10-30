@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container py-5">
-    <h1>Lista de Centros de Formación</h1>
+    <h1 class="mb-4">Lista de Centros de Formación</h1>
     <br>
 
     <!-- Botón de Nuevo Centro fuera de la tabla -->
@@ -17,6 +17,7 @@
                     <th>Id</th>
                     <th>Name</th>
                     <th>Location</th>
+                    <th>Imagen</th>
                     <th colspan="3" class="text-center">Acción</th>
                 </tr>
             </thead>
@@ -32,6 +33,13 @@
                     <td>{{ $training_center['id'] ?? '' }}</td>
                     <td>{{ $training_center['name'] ?? '' }}</td>
                     <td>{{ $training_center['location'] ?? '' }}</td>
+                    <td>
+                        @if(!empty($training_center['imagen_url']))
+                        <img src="{{ $training_center['imagen_url'] }}" alt="{{ $training_center['name'] ?? 'Centro' }}" width="100" class="img-thumbnail">
+                        @else
+                        <span class="text-muted">Sin imagen</span>
+                        @endif
+                    </td>
 
                     <td class="text-center">
                         <a href="{{ route('training_center.show', $training_center['id']) }}" class="btn btn-info btn-sm">Mostrar</a>
@@ -51,7 +59,7 @@
                 </tr>
                 @empty
                 <tr>
-                    <td colspan="6" class="text-center py-4 text-muted">
+                    <td colspan="7" class="text-center py-4 text-muted">
                         No hay centros de formación registrados.
                     </td>
                 </tr>

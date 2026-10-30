@@ -139,6 +139,7 @@
         transition: all 0.25s ease;
         cursor: pointer;
     }
+
     .card-resumen:hover {
         transform: translateY(-6px);
         box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15) !important;

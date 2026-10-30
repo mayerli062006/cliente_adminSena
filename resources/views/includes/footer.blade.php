@@ -3,11 +3,11 @@
     .footer-hover {
         transition: transform 0.25s ease, color 0.25s ease;
         display: inline-block;
-        cursor: default; /* Cambia el puntero para indicar que no es un link activo */
+        cursor: default;
     }
     .footer-hover:hover {
         transform: translateY(-4px) scale(1.1);
-        color: #198754 !important; /* Verde SENA al pasar el mouse */
+        color: #198754 !important;
     }
     .footer-link {
         transition: color 0.2s ease, padding-left 0.2s ease;
@@ -19,12 +19,12 @@
     }
 </style>
 
-<!-- Footer Institucional -->
+
 <footer class="bg-dark text-white pt-5 pb-4 mt-5 border-top border-success border-3">
     <div class="container">
         <div class="row g-4">
             
-            <!-- Columna 1: Información Institucional / Contacto -->
+          
             <div class="col-lg-5 col-md-6">
                 <div class="d-flex align-items-center mb-3">
                     <div class="p-2 bg-success bg-opacity-25 rounded-circle me-2 text-success">
@@ -43,7 +43,7 @@
                         <i class="fas fa-phone-alt text-success me-2"></i> +57 3205195429
                     </li>
                     <li class="mb-0">
-                        <i class="fas fa-envelope text-success me-2"></i> mquinayas07@gmail.com
+                        <i class="fas fa-envelope text-success me-2"></i> macamayerli941@gmail.com
                     </li>
                 </ul>
             </div>

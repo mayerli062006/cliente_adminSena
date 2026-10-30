@@ -18,7 +18,6 @@ class TrainingCenterController extends Controller
     {
         $url = env('URL_SERVER_API');
 
-        // Se eliminó '/index' para que apunte correctamente a la ruta base de la API
         $training_centers = $this->fetchDataFromApi($url . '/training_center');
 
         return view('training_center.index', compact('training_centers'));
@@ -26,14 +25,33 @@ class TrainingCenterController extends Controller
 
     public function create()
     {
+        $url = env('URL_SERVER_API');
+        // Si necesitas traer datos relacionados para el formulario (como hacía categories con posts), 
+        // puedes agregarlos aquí. Si no, puedes dejarlo solo retornando la vista.
+
         return view('training_center.create');
     }
 
     public function store(Request $request)
     {
-        $url = env('URL_SERVER_API');
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'location' => 'required|string|max:255',
+            'imagen' => 'required|image|mimes:jpg,jpeg,png,webp|max:5120',
+        ]);
 
-        Http::post($url . '/training_center', $request->all());
+        $url = env('URL_SERVER_API');
+        $file = $request->file('imagen');
+
+        // Enviamos los campos de texto junto con el archivo usando Http::attach (exactamente igual que el instructor)
+        $response = Http::attach(
+            'imagen',
+            file_get_contents($file->getRealPath()),
+            $file->getClientOriginalName()
+        )->post($url . '/training_center', [
+            'name' => $request->name,
+            'location' => $request->location,
+        ]);
 
         return redirect()->route('training_center.index');
     }

@@ -23,7 +23,6 @@ class AreaController extends Controller
     // Convertimos la respuesta de la API a un arreglo
     $areas = $response->json();
 
-    // AQUÍ DEBE IR LA VISTA (Asegúrate de quitar el dd($areas))
     return view('area.index', compact('areas'));
 }
 
@@ -36,7 +35,7 @@ class AreaController extends Controller
 {
     $url = env('URL_SERVER_API');
 
-    // Debe apuntar correctamente a '/area' o '/areas' según tu ruta de la API
+
     Http::post($url . '/area', [
         'name' => $request->name,
     ]);

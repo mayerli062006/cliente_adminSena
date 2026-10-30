@@ -18,28 +18,39 @@ class ComputerController extends Controller
     {
         $url = env('URL_SERVER_API');
 
-        // Quitamos '/index' para que apunte correctamente a http://adminsena.test/v1/computer
         $computers = $this->fetchDataFromApi($url . '/computer');
 
         return view('computer.index', compact('computers'));
     }
+
     public function create()
     {
         return view('computer.create');
     }
 
-public function store(Request $request)
+    public function store(Request $request)
     {
-        $url = env('URL_SERVER_API');
+        $request->validate([
+            'numero' => 'required|integer',
+            'marca' => 'required|string|max:255',
+            'imagen' => 'required|image|mimes:jpg,jpeg,png,webp|max:5120',
+        ]);
 
-        // Enviamos explícitamente los campos con sus nombres correctos
-        Http::post($url . '/computer', [
+        $url = env('URL_SERVER_API');
+        $file = $request->file('imagen');
+
+        Http::attach(
+            'imagen',
+            file_get_contents($file->getRealPath()),
+            $file->getClientOriginalName()
+        )->post($url . '/computer', [
             'numero' => $request->numero,
             'marca' => $request->marca,
         ]);
 
         return redirect()->route('computer.index');
     }
+
     public function show($id)
     {
         $url = env('URL_SERVER_API');
@@ -58,12 +69,31 @@ public function store(Request $request)
         return view('computer.edit', compact('computer'));
     }
 
-   public function update(Request $request, $id)
+    public function update(Request $request, $id)
     {
+        $request->validate([
+            'numero' => 'required|integer',
+            'marca' => 'required|string|max:255',
+            'imagen' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:5120',
+        ]);
+
         $url = env('URL_SERVER_API');
 
-        // Enviamos explícitamente los campos para la actualización
-        Http::put($url . '/computer/' . $id, [
+        $http = Http::asMultipart();
+
+        if ($request->hasFile('imagen')) {
+            $file = $request->file('imagen');
+            $http->attach(
+                'imagen',
+                file_get_contents($file->getRealPath()),
+                $file->getClientOriginalName()
+            );
+        }
+
+        // Laravel no siempre procesa archivos binarios correctamente mediante un PUT directo por HTTP,
+        // por lo que se envía por POST simulando PUT o con multipart hacia la API.
+        $http->post($url . '/computer/' . $id, [
+            '_method' => 'PUT',
             'numero' => $request->numero,
             'marca' => $request->marca,
         ]);

@@ -17,8 +17,7 @@
                 type="text"
                 name="name"
                 class="form-control"
-                required
-            >
+                required>
         </div>
 
         <div class="mb-3">
@@ -28,8 +27,7 @@
                 type="email"
                 name="email"
                 class="form-control"
-                required
-            >
+                required>
         </div>
 
         <div class="mb-3">
@@ -39,8 +37,7 @@
                 type="text"
                 name="cell_number"
                 class="form-control"
-                required
-            >
+                required>
         </div>
 
         <div class="mb-3">
@@ -51,13 +48,13 @@
                 <option value="">Seleccione un curso</option>
 
                 @foreach($courses ?? [] as $course)
-                    @php
-                        $courseId = is_array($course) ? ($course['id'] ?? '') : ($course->id ?? '');
-                        $courseName = is_array($course) ? ($course['name_curso'] ?? $course['course_number'] ?? '') : ($course->name_curso ?? '');
-                    @endphp
-                    <option value="{{ $courseId }}">
-                        {{ $courseName }}
-                    </option>
+                @php
+                $courseId = is_array($course) ? ($course['id'] ?? '') : ($course->id ?? '');
+                $courseName = is_array($course) ? ($course['name_curso'] ?? $course['course_number'] ?? '') : ($course->name_curso ?? '');
+                @endphp
+                <option value="{{ $courseId }}">
+                    {{ $courseName }}
+                </option>
                 @endforeach
 
             </select>
@@ -71,13 +68,13 @@
                 <option value="">Seleccione un equipo</option>
 
                 @foreach($computers ?? [] as $computer)
-                    @php
-                        $computerId = is_array($computer) ? ($computer['id'] ?? '') : ($computer->id ?? '');
-                        $computerNum = is_array($computer) ? ($computer['number'] ?? $computer['numero'] ?? '') : ($computer->numero ?? '');
-                    @endphp
-                    <option value="{{ $computerId }}">
-                        {{ $computerNum }}
-                    </option>
+                @php
+                $computerId = is_array($computer) ? ($computer['id'] ?? '') : ($computer->id ?? '');
+                $computerNum = is_array($computer) ? ($computer['number'] ?? $computer['numero'] ?? '') : ($computer->numero ?? '');
+                @endphp
+                <option value="{{ $computerId }}">
+                    {{ $computerNum }}
+                </option>
                 @endforeach
 
             </select>
